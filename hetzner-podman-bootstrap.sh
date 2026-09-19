@@ -201,7 +201,7 @@ echo "${NEW_USER} ALL=(ALL) NOPASSWD:ALL" > "/etc/sudoers.d/90-${NEW_USER}"
 chmod 440 "/etc/sudoers.d/90-${NEW_USER}"
 
 # 5. SSH hardening
-echo "==> Hardening sshd (port ${SSH_PORT}, key-only, no root login)"
+echo "==> Hardening sshd (port ${SSH_PORT}, key-only, root allowed with key)"
 if [ ! -s "${AUTH_KEYS}" ]; then
   echo "WARN: skipping PasswordAuthentication=no because ${AUTH_KEYS} is empty (would lock you out)."
 else
@@ -210,7 +210,7 @@ else
   # with its actual value before being written to the file.
   cat > "${SSHD_DROPIN}" <<EOF
 Port ${SSH_PORT}
-PermitRootLogin no
+PermitRootLogin prohibit-password
 PasswordAuthentication no
 KbdInteractiveAuthentication no
 PubkeyAuthentication yes

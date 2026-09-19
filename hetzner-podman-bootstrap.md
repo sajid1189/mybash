@@ -56,7 +56,7 @@ Small servers can run out of memory, and Linux then kills processes, possibly yo
 
 ### 5. Lock down SSH
 - Moves SSH to `SSH_PORT`.
-- Turns off root login and password login, so only SSH keys work.
+- Turns off password login, so only SSH keys work. Root can still log in over SSH, but only with a key (`PermitRootLogin prohibit-password`).
 - Limits login attempts and how long a login can take.
 - Tests the config before reloading, so a typo can't break SSH.
 - It skips the password-disable part if the new user has no key, to avoid locking you out.
